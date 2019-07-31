@@ -1,0 +1,59 @@
+{% load static %}
+{% load babeljs %}
+<!doctype html>
+<html lang="id" class="loading">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Sistem Informasi Manajemen Pegawai Dinas PU Bina Marga">
+    <meta name="keywords"
+          content="SIGAWAI, Dinas PU Bina Marga">
+    <meta name="author" content="moh-affan">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    {#    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900"#}
+    {#          rel="stylesheet">#}
+    <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/feather/style.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/simple-line-icons/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/font-awesome/css/font-awesome.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/vendors/css/perfect-scrollbar.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/vendors/css/toastr.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/vendors/css/prism.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "convex/css/app.css" %}">
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body id="app" data-col="2-columns" class="2-columns">
+{% babeljs %}
+{#CORE DEPENDENCY#}
+<script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/core/popper.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/core/bootstrap.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/perfect-scrollbar.jquery.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/prism.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/jquery.matchHeight-min.js" %}"></script>
+<script src="{% static "convex/vendors/js/screenfull.js" %}"></script>
+<script src="{% static "convex/vendors/js/toastr.min.js" %}"></script>
+<script src="{% static "convex/vendors/js/pace/pace.min.js" %}"></script>
+{% block deps %}
+{% endblock %}
+{#END CORE DEPENDENCY#}
+
+{#APP DEPENDENCY#}
+{#END APP DEPENDENCY#}
+
+<script type="application/javascript" src="{% static "js/axios.min.js" %}"></script>
+<script data-main="{% static "js/app.js" %}" type="application/javascript"
+        src="{% static "js/require.js" %}"></script>
+
+{% block react %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+</body>
+</html>

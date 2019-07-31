@@ -1,0 +1,39 @@
+{% extends "template.html" %}
+{% load static %}
+{% load basic_auth_generator %}
+{% block react %}
+
+    <script type="text/babel">
+        window.activeMenu = "Menu";
+        axios.defaults.baseURL = 'http://localhost:8000/api';
+        axios.defaults.headers.common['Authorization'] = '{% generate_basic 'affan' '12333' %}';
+        require(['react-dom', 'react', 'jsx!lib/Scaffold', 'jsx!lib/pages/SettingMenu'], function (ReactDOM, React, Scaffold, SettingMenu) {
+            ReactDOM.render(
+                <Scaffold blank={false}><SettingMenu/></Scaffold>, document.querySelector('#app')
+            )
+        });
+    </script>
+
+{% endblock %}
+{% block deps %}
+    <script src="/public/convex/vendors/js/datatable/datatables.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/dataTables.responsive.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/dataTables.buttons.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/buttons.flash.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/buttons.html5.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/buttons.print.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/jszip.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/pdfmake.min.js"></script>
+    <script src="/public/convex/vendors/js/datatable/vfs_fonts.js"></script>
+    <script src="{% static "convex/vendors/js/select2.min.js" %}"></script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/datatables.min.css" %}">
+    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/responsive.dataTables.min.css" %}">
+    {#    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/jquery.dataTables.min.css" %}">#}
+    <link rel="stylesheet" href="{% static "convex/vendors/css/select2.min.css" %}">
+    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/buttons.bootstrap4.min.css" %}">
+    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/dataTables.bootstrap4.min.css" %}">
+    <link rel="stylesheet" href="{% static "convex/vendors/css/tables/datatable/select.dataTables.min.css" %}">
+{% endblock %}

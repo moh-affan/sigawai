@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+{% load basic_auth_generator %}
+{% block react %}
+
+    <script type="text/babel">
+        window.activeMenu = "Dashboard";
+        axios.defaults.baseURL = 'http://localhost:8000/api';
+        axios.defaults.headers.common['Authorization'] = '{% generate_basic 'affan' '12333' %}';
+        require(['react-dom', 'react', 'jsx!lib/Scaffold', 'jsx!lib/pages/Dashboard'], function (ReactDOM, React, Scaffold, Dashboard) {
+            ReactDOM.render(
+                <Scaffold blank={false}><Dashboard/></Scaffold>, document.querySelector('#app')
+            )
+        });
+    </script>
+
+{% endblock %}
