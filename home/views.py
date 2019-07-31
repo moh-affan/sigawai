@@ -36,22 +36,29 @@ class LoginApiView(APIView):
     @method_decorator(basic_auth_required, name='post')
     def post(self, request, format=None):
 
-        user = authenticate(username=request.data['username'], password=request.data['password'])
+        user = authenticate(
+            username=request.data['username'],
+            password=request.data['password'])
         if user is not None:
             if user.is_active:
                 login(request, user)
                 request.session['username'] = request.data['username']
-                serializer = UserSerializer(User.objects.get(username__exact=user.username), data=request.data,
-                                            context={'request': request})
+                serializer = UserSerializer(
+                    User.objects.get(username__exact=user.username),
+                    data=request.data,
+                    context={'request': request})
                 if serializer.is_valid():
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
-                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(serializer.errors,
+                                    status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'success': False, 'message': "User belum terverifikasi"},
+                return Response({'success': False,
+                                 'message': "User belum terverifikasi"},
                                 status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            return Response({'success': False, 'message': "Username atau password Anda salah"},
+            return Response({'success': False,
+                             'message': "Username atau password Anda salah"},
                             status=status.HTTP_401_UNAUTHORIZED)
 
     @method_decorator(basic_auth_required, name='delete')
@@ -60,4 +67,3 @@ class LoginApiView(APIView):
         request.session.flush()
         return Response({'success': True, 'message': "Berhasil logout"},
                         status=status.HTTP_200_OK)
-

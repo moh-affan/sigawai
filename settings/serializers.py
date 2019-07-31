@@ -11,7 +11,8 @@ class SubmenuSerializer(serializers.ModelSerializer):
 
 class MenuSerializer(serializers.ModelSerializer):
     submenu = SubmenuSerializer(many=True, required=False)
-    parent = serializers.PrimaryKeyRelatedField(queryset=Menu.get_menu(), allow_null=True)
+    parent = serializers.PrimaryKeyRelatedField(queryset=Menu.get_menu(),
+                                                allow_null=True)
 
     class Meta:
         model = Menu

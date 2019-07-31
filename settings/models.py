@@ -5,7 +5,8 @@ class Menu(models.Model):
     title = models.CharField(max_length=25)
     iconClass = models.CharField(max_length=20)
     href = models.CharField(max_length=200)
-    parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL, related_name='Menu')
+    parent = models.ForeignKey(
+        'self', null=True, on_delete=models.SET_NULL, related_name='Menu')
 
     class Meta:
         ordering = ['id']

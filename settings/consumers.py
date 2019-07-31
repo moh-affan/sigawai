@@ -10,7 +10,8 @@ from sigawai.consumers import GenericAsyncBroadcastAPIConsumer
 from sigawai.mixins import SubscribeModelMixin
 
 
-class MenuApiConsumer(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, SubscribeModelMixin,
+class MenuApiConsumer(mixins.ListModelMixin, mixins.CreateModelMixin,
+                      mixins.RetrieveModelMixin, SubscribeModelMixin,
                       GenericAsyncBroadcastAPIConsumer):
     queryset = Menu.get_menu()
     serializer_class = MenuSerializer
