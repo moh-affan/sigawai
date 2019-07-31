@@ -7,4 +7,6 @@ register = template.Library()
 
 @register.simple_tag
 def generate_basic(user, password):
-    return 'Basic {}'.format(base64.b64encode('{}:{}'.format(user, password).encode('utf-8')).decode())
+    token = base64.b64encode('{}:{}'.format(user, password).encode(
+        encoding='utf-8', errors='strict')).decode()
+    return 'Basic {}'.format(token)
