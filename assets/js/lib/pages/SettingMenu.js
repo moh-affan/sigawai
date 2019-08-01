@@ -6,7 +6,7 @@ define(function (require) {
 
         constructor(props) {
             super(props);
-            this.state = {menus: []};
+            this.state = { menus: [] };
             this._editButtonClick = this._editButtonClick.bind(this);
             this._removeButtonClick = this._removeButtonClick.bind(this);
             this._menuFormSubmit = this._menuFormSubmit.bind(this);
@@ -15,15 +15,11 @@ define(function (require) {
 
         componentDidMount() {
             let $this = this;
-            Array.from(document.getElementsByClassName('modal')).forEach(function (el, i) {
-                $('#modal-placeholder').append(el.outerHTML);
-            });
-            $('.wrapper').find('.modal').remove();
 
             this.ws.onopen = function () {
-                $this.ws.send(JSON.stringify({'action': 'subscribe', 'group_name': 'broadcast', 'request_id': 1}));
-                $this.ws.send(JSON.stringify({'action': 'list', 'request_id': 1}));
-                $this.ws.send(JSON.stringify({'action': 'retrieve', 'request_id': 1, 'pk': 3}));
+                $this.ws.send(JSON.stringify({ 'action': 'subscribe', 'group_name': 'broadcast', 'request_id': 1 }));
+                $this.ws.send(JSON.stringify({ 'action': 'list', 'request_id': 1 }));
+                $this.ws.send(JSON.stringify({ 'action': 'retrieve', 'request_id': 1, 'pk': 3 }));
             };
 
             this.ws.onmessage = function (d) {
@@ -34,8 +30,8 @@ define(function (require) {
                 let response = JSON.parse(d.data);
                 console.log(response);
                 if (response.action === 'list') {
-                    $this.setState({menus: response.data});
-                    $this.table = $('table').DataTable({responsive: shouldResponsive});
+                    $this.setState({ menus: response.data });
+                    $this.table = $('table').DataTable({ responsive: shouldResponsive });
                 } else if (response.action === 'create' && response.errors.length === 0) {
                     toastr.success("Berhasil menyimpan menu", "Berhasil");
                     $('#form-menu').trigger('reset');
@@ -64,14 +60,21 @@ define(function (require) {
             data.forEach(function (d) {
                 formData[d.name] = d.value;
             });
-            this.ws.send(JSON.stringify({'action': 'create', 'request_id': 1, 'data': formData}));
+            this.ws.send(JSON.stringify({ 'action': 'create', 'request_id': 1, 'data': formData }));
             return false;
         }
 
         _editButtonClick(menu) {
             console.log("edit");
             console.log(menu);
-            $('#inlineForm').modal('show');
+            this.setState({});
+            let el = document.getElementById('preEditForm').outerHTML.replace('preEditForm', 'editForm');
+            el = $(el);
+            el.find('.select2').remove();
+            el.find('select').removeClass('select2-hidden-accessible');
+            $('#modal-placeholder').html(el[0].outerHTML);
+            $('form').find('select').select2();
+            $('#editForm').modal('show');
         }
 
         _removeButtonClick(menu) {
@@ -89,14 +92,14 @@ define(function (require) {
                                     <form className="form form-horizontal" id="form-menu">
                                         <div className="form-body">
                                             <h4 className="form-section">
-                                                <i className="icon-book-open"/>Form Menu</h4>
+                                                <i className="icon-book-open" />Form Menu</h4>
 
                                             <div className="form-group row">
                                                 <label className="col-md-3 label-control"
-                                                       htmlFor="inpTitle">Title: </label>
+                                                    htmlFor="inpTitle">Title: </label>
                                                 <div className="col-md-9">
                                                     <input type="text" id="inpTitle" className="form-control"
-                                                           name="title"/>
+                                                        name="title" />
                                                 </div>
                                             </div>
 
@@ -105,22 +108,22 @@ define(function (require) {
                                                     Icon Class Name : </label>
                                                 <div className="col-md-9">
                                                     <input type="text" id="inpIconClass" className="form-control"
-                                                           name="iconClass"/>
+                                                        name="iconClass" />
                                                 </div>
                                             </div>
 
                                             <div className="form-group row">
                                                 <label className="col-md-3 label-control"
-                                                       htmlFor="inpHref">Link: </label>
+                                                    htmlFor="inpHref">Link: </label>
                                                 <div className="col-md-9">
                                                     <input type="text" id="inpHref" className="form-control"
-                                                           name="href"/>
+                                                        name="href" />
                                                 </div>
                                             </div>
 
                                             <div className="form-group row">
                                                 <label className="col-md-3 label-control"
-                                                       htmlFor="selectParent">Parent Menu: </label>
+                                                    htmlFor="selectParent">Parent Menu: </label>
                                                 <div className="col-md-9">
                                                     <select id="selectParent" name="parent" className="form-control d-block">
                                                         <option value="" selected="" disabled="">--Parent--</option>
@@ -134,11 +137,11 @@ define(function (require) {
 
                                         <div className="form-actions">
                                             <button type="button" className="btn btn-danger mr-1">
-                                                <i className="icon-trash"/> Cancel
+                                                <i className="icon-trash" /> Cancel
                                             </button>
                                             <button type="button" onClick={this._menuFormSubmit}
-                                                    className="btn btn-success">
-                                                <i className="icon-note"/> Save
+                                                className="btn btn-success">
+                                                <i className="icon-note" /> Save
                                             </button>
                                         </div>
                                     </form>
@@ -158,60 +161,60 @@ define(function (require) {
                     <div className="card">
                         <div className="card-body collapse show">
                             <div className="card-block card-dashboard">
-                                <hr/>
+                                <hr />
                                 <table className="table table-striped table-borderless table-hover">
                                     <thead>
-                                    <tr>
-                                        <th style={{width: 10}}>#</th>
-                                        <th>Title</th>
-                                        <th>Icon Class</th>
-                                        <th>Link</th>
-                                        <th style={{width: 100}}>Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{ width: 10 }}>#</th>
+                                            <th>Title</th>
+                                            <th>Icon Class</th>
+                                            <th>Link</th>
+                                            <th style={{ width: 100 }}>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {this.state.menus.map(function (menu, i) {
-                                        return ([<tr>
-                                            <td>{no += 1}</td>
-                                            <td>{menu.title}</td>
-                                            <td>{menu.iconClass} [<span className={menu.iconClass}/>]</td>
-                                            <td>{menu.href}</td>
-                                            <td>
-                                                <span onClick={() => {
-                                                    $this._removeButtonClick(menu)
-                                                }} className="badge badge-danger cursor-pointer"><span
-                                                    className="icon-trash"/>
-                                                </span>
-                                                &nbsp;
-                                                <span onClick={() => {
-                                                    $this._editButtonClick(menu)
-                                                }} className="badge badge-info cursor-pointer"><span
-                                                    className="icon-pencil"/>
-                                                </span>
-                                            </td>
-                                        </tr>, menu.submenu.map(function (sub, n) {
-                                            return (<tr>
+                                        {this.state.menus.map(function (menu, i) {
+                                            return ([<tr>
                                                 <td>{no += 1}</td>
-                                                <td>&nbsp;&nbsp; - {sub.title}</td>
-                                                <td>&nbsp;&nbsp; {sub.iconClass} [<span className={sub.iconClass}/>]
-                                                </td>
-                                                <td> &nbsp;&nbsp;{sub.href}</td>
-                                                <td> &nbsp;&nbsp;
+                                                <td>{menu.title}</td>
+                                                <td>{menu.iconClass} [<span className={menu.iconClass} />]</td>
+                                                <td>{menu.href}</td>
+                                                <td>
                                                     <span onClick={() => {
-                                                        $this._removeButtonClick(sub)
+                                                        $this._removeButtonClick(menu)
                                                     }} className="badge badge-danger cursor-pointer"><span
-                                                        className="icon-trash"/>
-                                                </span>
+                                                            className="icon-trash" />
+                                                    </span>
                                                     &nbsp;
-                                                    <span onClick={() => {
-                                                        $this._editButtonClick(sub)
+                                                <span onClick={() => {
+                                                        $this._editButtonClick(menu)
                                                     }} className="badge badge-info cursor-pointer"><span
-                                                        className="icon-pencil"/>
-                                                </span>
+                                                            className="icon-pencil" />
+                                                    </span>
                                                 </td>
-                                            </tr>)
-                                        })])
-                                    })}
+                                            </tr>, menu.submenu.map(function (sub, n) {
+                                                return (<tr>
+                                                    <td>{no += 1}</td>
+                                                    <td>&nbsp;&nbsp; - {sub.title}</td>
+                                                    <td>&nbsp;&nbsp; {sub.iconClass} [<span className={sub.iconClass} />]
+                                                </td>
+                                                    <td> &nbsp;&nbsp;{sub.href}</td>
+                                                    <td> &nbsp;&nbsp;
+                                                    <span onClick={() => {
+                                                            $this._removeButtonClick(sub)
+                                                        }} className="badge badge-danger cursor-pointer"><span
+                                                                className="icon-trash" />
+                                                        </span>
+                                                        &nbsp;
+                                                    <span onClick={() => {
+                                                            $this._editButtonClick(sub)
+                                                        }} className="badge badge-info cursor-pointer"><span
+                                                                className="icon-pencil" />
+                                                        </span>
+                                                    </td>
+                                                </tr>)
+                                            })])
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -223,8 +226,8 @@ define(function (require) {
 
         _renderModal() {
             return (
-                <div className="modal fade text-left" id="inlineForm" tabIndex="-1" role="dialog"
-                     aria-labelledby="myModalLabel33" aria-hidden="true">
+                <div className="modal fade text-left" id="preEditForm" tabIndex="-1" role="dialog"
+                    aria-labelledby="myModalLabel33" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -238,18 +241,18 @@ define(function (require) {
                                     <label>Title: </label>
                                     <div className="form-group">
                                         <input type="text" placeholder="Title" id="edit_title" name="title"
-                                               className="form-control"/>
+                                            className="form-control" />
                                     </div>
                                     <label>Icon Class Name: </label>
                                     <div className="form-group">
                                         <input type="text" placeholder="Icon Class Name" id="edit_iconClass"
-                                               name="iconClass"
-                                               className="form-control"/>
+                                            name="iconClass"
+                                            className="form-control" />
                                     </div>
                                     <label>Link: </label>
                                     <div className="form-group">
                                         <input type="text" placeholder="Link" id="edit_href" name="href"
-                                               className="form-control"/>
+                                            className="form-control" />
                                     </div>
                                     <label>Parent Menu: </label>
                                     <div className="form-group">
@@ -263,8 +266,8 @@ define(function (require) {
                                 </div>
                                 <div className="modal-footer">
                                     <input type="reset" className="btn btn-outline-secondary btn-lg"
-                                           data-dismiss="modal" value="Close"/>
-                                    <input type="submit" className="btn btn-outline-primary btn-lg" value="Save"/>
+                                        data-dismiss="modal" value="Close" />
+                                    <input type="submit" className="btn btn-outline-primary btn-lg" value="Save" />
                                 </div>
                             </form>
                         </div>
@@ -275,56 +278,56 @@ define(function (require) {
 
         render() {
             return ([
-                    <div className="container-fluid">
-                        <section id="tabs-with-icons">
-                            <div className="row">
-                                <div className="col-12 mt-3 mb-1">
-                                    <h4 className="text-uppercase">Setting Menu</h4>
-                                    <p>Pengaturan menu aplikasi (membuat dan mengorganisir menu)</p>
-                                </div>
+                <div className="container-fluid">
+                    <section id="tabs-with-icons">
+                        <div className="row">
+                            <div className="col-12 mt-3 mb-1">
+                                <h4 className="text-uppercase">Setting Menu</h4>
+                                <p>Pengaturan menu aplikasi (membuat dan mengorganisir menu)</p>
                             </div>
-                            <div className="row match-height">
-                                <div className="col-xl-12 col-lg-12">
-                                    <div className="card">
-                                        <div className="card-header">
-                                            <div className="card-title-wrap bar-primary">
-                                                <h4 className="card-title">&nbsp;</h4>
-                                            </div>
+                        </div>
+                        <div className="row match-height">
+                            <div className="col-xl-12 col-lg-12">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <div className="card-title-wrap bar-primary">
+                                            <h4 className="card-title">&nbsp;</h4>
                                         </div>
-                                        <div className="card-body"
-                                             style={{minHeight: 100 + 'vh', marginTop: -80 + 'px'}}>
-                                            <div className="card-block">
-                                                <ul className="nav nav-tabs">
-                                                    <li className="nav-item">
-                                                        <a className="nav-link active" id="baseIcon-tab1"
-                                                           data-toggle="tab"
-                                                           aria-controls="tabList" href="#tabList" aria-expanded="true">
-                                                            <i className="fa fa-list-alt"/> List</a>
-                                                    </li>
-                                                    <li className="nav-item">
-                                                        <a className="nav-link" id="baseIcon-tab2" data-toggle="tab"
-                                                           aria-controls="tabInput" href="#tabInput"
-                                                           aria-expanded="false"><i
-                                                            className="fa fa-pencil-square-o"/> Input</a>
-                                                    </li>
-                                                </ul>
-                                                <div className="tab-content px-1 pt-1">
-                                                    <div role="tabpanel" className="tab-pane active" id="tabList"
-                                                         aria-expanded="true" aria-labelledby="baseIcon-tabList">
-                                                        {this._renderList()}
-                                                    </div>
-                                                    <div className="tab-pane" id="tabInput"
-                                                         aria-labelledby="baseIcon-tabInput">
-                                                        {this._renderInput()}
-                                                    </div>
+                                    </div>
+                                    <div className="card-body"
+                                        style={{ minHeight: 100 + 'vh', marginTop: -80 + 'px' }}>
+                                        <div className="card-block">
+                                            <ul className="nav nav-tabs">
+                                                <li className="nav-item">
+                                                    <a className="nav-link active" id="baseIcon-tab1"
+                                                        data-toggle="tab"
+                                                        aria-controls="tabList" href="#tabList" aria-expanded="true">
+                                                        <i className="fa fa-list-alt" /> List</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" id="baseIcon-tab2" data-toggle="tab"
+                                                        aria-controls="tabInput" href="#tabInput"
+                                                        aria-expanded="false"><i
+                                                            className="fa fa-pencil-square-o" /> Input</a>
+                                                </li>
+                                            </ul>
+                                            <div className="tab-content px-1 pt-1">
+                                                <div role="tabpanel" className="tab-pane active" id="tabList"
+                                                    aria-expanded="true" aria-labelledby="baseIcon-tabList">
+                                                    {this._renderList()}
+                                                </div>
+                                                <div className="tab-pane" id="tabInput"
+                                                    aria-labelledby="baseIcon-tabInput">
+                                                    {this._renderInput()}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </div>, this._renderModal()]
+                        </div>
+                    </section>
+                </div>, this._renderModal()]
             );
         }
     };
