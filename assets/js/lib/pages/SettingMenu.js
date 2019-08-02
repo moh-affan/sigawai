@@ -74,6 +74,14 @@ define(function (require) {
             el.find('select').removeClass('select2-hidden-accessible');
             $('#modal-placeholder').html(el[0].outerHTML);
             $('form').find('select').select2();
+            $('#editForm').find('#edit_title').val(menu.title);
+            $('#editForm').find('#edit_iconClass').val(menu.iconClass);
+            $('#editForm').find('#edit_href').val(menu.href);
+            $('#editForm').find('#edit_parent').val(menu.parent);
+            $('body').on('#formEdit', 'submit', function (e) {
+                console.log($(this).serializeArray());
+                return false;
+            });
             $('#editForm').modal('show');
         }
 
@@ -265,9 +273,9 @@ define(function (require) {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <input type="reset" className="btn btn-outline-secondary btn-lg"
-                                        data-dismiss="modal" value="Close" />
-                                    <input type="submit" className="btn btn-outline-primary btn-lg" value="Save" />
+                                    <button type="reset" className="btn btn-outline-secondary"
+                                        data-dismiss="modal">Close</button>
+                                    <button type="submit" className="btn btn-outline-primary">Save</button>
                                 </div>
                             </form>
                         </div>
