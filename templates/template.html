@@ -1,5 +1,5 @@
 {% load static %}
-{% load babeljs %}
+
 <!doctype html>
 <html lang="id" class="loading">
 <head>
@@ -14,8 +14,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    {#    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900"#}
-    {#          rel="stylesheet">#}
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900"
+             rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/feather/style.min.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/simple-line-icons/style.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "convex/fonts/font-awesome/css/font-awesome.min.css" %}">
@@ -28,8 +28,8 @@
     {% endblock %}
 </head>
 <body id="app" data-col="2-columns" class="2-columns">
-{% babeljs %}
 {#CORE DEPENDENCY#}
+<script src="{% static "js/browser.min.js" %}"></script>
 <script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
 <script src="{% static "convex/vendors/js/core/popper.min.js" %}"></script>
 <script src="{% static "convex/vendors/js/core/bootstrap.min.js" %}"></script>
