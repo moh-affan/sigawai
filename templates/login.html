@@ -3,7 +3,7 @@
 {% block react %}
 
     <script type="text/babel">
-        axios.defaults.baseURL = 'http://localhost:8000/api';
+        axios.defaults.baseURL = 'http://'+window.location.host+'/api';
         axios.defaults.headers.common['Authorization'] = '{% generate_basic 'affan' '12333' %}';
         require(['react-dom', 'react', 'jsx!lib/Scaffold', 'jsx!lib/pages/Login'], function (ReactDOM, React, Scaffold, Login) {
             ReactDOM.render(
