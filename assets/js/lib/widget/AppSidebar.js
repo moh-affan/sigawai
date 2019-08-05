@@ -12,15 +12,15 @@ define(function (require) {
             super(props);
             this.collapse = this.collapse.bind(this);
             this.expand = this.expand.bind(this);
-            this.state = {menus: []};
-            this.ws = new WebSocket('ws://' + window.location.host + '/ws/api/menu/');
+            this.state = { menus: [] };
+            this.ws = new WebSocket('wss://' + window.location.host + '/ws/api/menu/');
         }
 
         componentDidMount() {
             let that = this;
             this.ws.onopen = function () {
-                that.ws.send(JSON.stringify({'action': 'subscribe', 'group_name': 'broadcast', 'request_id': 1}));
-                that.ws.send(JSON.stringify({'action': 'list', 'request_id': 1}));
+                that.ws.send(JSON.stringify({ 'action': 'subscribe', 'group_name': 'broadcast', 'request_id': 1 }));
+                that.ws.send(JSON.stringify({ 'action': 'list', 'request_id': 1 }));
             };
 
             this.ws.onmessage = function (d) {
@@ -28,7 +28,7 @@ define(function (require) {
                 let response = JSON.parse(d.data);
                 console.log(response);
                 if (response.action === 'list') {
-                    that.setState({menus: response.data});
+                    that.setState({ menus: response.data });
                 } else if (response.action === 'create') {
                     if (response.data.parent === null)
                         that.state.menus.push(response.data);
@@ -213,7 +213,7 @@ define(function (require) {
 
         loadMenus() {
             return this.state.menus.map((m) => {
-                return (<Menu menu={m} submenu={m.submenu}/>)
+                return (<Menu menu={m} submenu={m.submenu} />)
             })
         }
 
@@ -256,18 +256,18 @@ define(function (require) {
         render() {
             return (
                 <div data-active-color="white" data-background-color="crystal-clear"
-                     data-image="/public/img/sidebg.jpg" className="app-sidebar">
+                    data-image="/public/img/sidebg.jpg" className="app-sidebar">
                     <div className="sidebar-header">
                         <div className="logo clearfix"><a href="#" className="logo-text float-left">
-                            <div className="logo-img"><img src="/public/img/korpri_putih.png" alt="Logo"/></div>
+                            <div className="logo-img"><img src="/public/img/korpri_putih.png" alt="Logo" /></div>
                             <span className="text align-middle"><span className="text-success">Si</span>Gawai</span></a>
                             <a id="sidebarToggle"
-                               href="javascript:void(0)"
-                               className="nav-toggle d-none d-sm-none d-md-none d-lg-block">
-                                <i data-toggle="expanded" className="ft-disc toggle-icon"/></a>
+                                href="javascript:void(0)"
+                                className="nav-toggle d-none d-sm-none d-md-none d-lg-block">
+                                <i data-toggle="expanded" className="ft-disc toggle-icon" /></a>
                             <a id="sidebarClose" href="javascript:void(0)"
-                               className="nav-close d-block d-md-block d-lg-none d-xl-none">
-                                <i className="ft-circle"/></a>
+                                className="nav-close d-block d-md-block d-lg-none d-xl-none">
+                                <i className="ft-circle" /></a>
                         </div>
                     </div>
                     <div className="sidebar-content">
@@ -278,7 +278,7 @@ define(function (require) {
                             </ul>
                         </div>
                     </div>
-                    <div className="sidebar-background"/>
+                    <div className="sidebar-background" />
                 </div>);
         }
     };

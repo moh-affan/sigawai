@@ -10,7 +10,7 @@ define(function (require) {
             this._editButtonClick = this._editButtonClick.bind(this);
             this._removeButtonClick = this._removeButtonClick.bind(this);
             this._menuFormSubmit = this._menuFormSubmit.bind(this);
-            this.ws = new WebSocket('ws://' + window.location.host + '/ws/api/menu/');
+            this.ws = new WebSocket('wss://' + window.location.host + '/ws/api/menu/');
         }
 
         componentDidMount() {
