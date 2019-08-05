@@ -27,8 +27,8 @@ define(function (require) {
             let data = { 'username': this.inputUsername.current.value, 'password': this.inputPassword.current.value };
             axios.post('/login', data, config)
                 .then(function (response) {
-                    console.log(response);
-                    return;
+                    // console.log(response);
+                    // return;
                     if (typeof response.data.username !== 'undefined')
                         window.location.href = next;
                     else
