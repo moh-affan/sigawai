@@ -23,6 +23,7 @@ class LoginView(TemplateView):
     template_name = "login.html"
 
     def get(self, request, *args, **kwargs):
+        print(request.user)
         if request.user.is_authenticated:
             return redirect('/')
         context = self.get_context_data(**kwargs)
