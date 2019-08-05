@@ -24,7 +24,7 @@ SECRET_KEY = 'a8@2$#lfj8k2og$c#7-^6sv*-ih0l0p($v%9emg)7e0c1sm_@9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','affan.site', 'affan.southeastasia.cloudapp.azure.com', '10.0.0.4']
+ALLOWED_HOSTS = ['localhost', 'affan.site', 'affan.southeastasia.cloudapp.azure.com', '10.0.0.4', '13.76.243.217']
 
 # Application definition
 
@@ -149,7 +149,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://myworks.me:8000',
     'http://affan.site',
     'http://affaan.southeastasia.cloudapp.azure.com',
-    'http://10.0.0.4'
+    'http://10.0.0.4',
+    'http://13.76.243.217'
 ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = [
