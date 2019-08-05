@@ -4,7 +4,7 @@
 
     <script type="text/babel">
         window.activeMenu = "Dashboard";
-        axios.defaults.baseURL = 'http://'+window.location.host+'/api';
+        axios.defaults.baseURL = 'https://'+window.location.host+'/api';
         axios.defaults.headers.common['Authorization'] = '{% generate_basic 'affan' '12333' %}';
         require(['react-dom', 'react', 'jsx!lib/Scaffold', 'jsx!lib/pages/Dashboard'], function (ReactDOM, React, Scaffold, Dashboard) {
             ReactDOM.render(
