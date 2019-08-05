@@ -1,0 +1,13 @@
+[Unit]
+Description=sigawai daphne service
+After=network.target
+
+[Service]
+User=affan
+Group=affan
+WorkingDirectory=/home/affan/sigawai
+ExecStart=/home/affan/.local/bin/daphne --port 8000 --bind 0.0.0.0 sigawai.asgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
